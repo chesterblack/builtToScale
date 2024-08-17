@@ -24,3 +24,6 @@ position = Vector2(937, 199)
 [node name="Reflector" parent="." instance=ExtResource("5_3qst8")]
 position = Vector2(992, 276)
 rotation = -1.30027
+
+[node name="Goal2" parent="." instance=ExtResource("4_uui1a")]
+position = Vector2(874, 479)

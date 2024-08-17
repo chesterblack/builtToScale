@@ -3,10 +3,11 @@ class_name Beam extends Node2D
 @export var ignored_colliders : Array
 @export var length : float = 1000.0
 
-var is_reflected : bool = false
 var raycast : RayCast2D
 var line : Line2D
+var is_reflected : bool = false
 var reflected_beam : Node2D
+var collider : Node2D
 
 
 func _ready():
@@ -29,8 +30,8 @@ func _physics_process(delta):
 	line.add_point(raycast.position)
 	
 	if raycast.is_colliding():
-		var collider = raycast.get_collider()
-		# $Label.text = str(collider) + "\n" + str(ignored_colliders)
+		collider = raycast.get_collider()
+		$Label.text = str(collider) + "\n" + str(ignored_colliders)
 		line.add_point(to_local(raycast.get_collision_point()))
 		
 		if collider not in ignored_colliders and collider is Reflector:
@@ -49,7 +50,7 @@ func _physics_process(delta):
 			reflected_beam.reflect_beam(collision_point, reflection)
 		
 		if collider is Goal:
-			print("WIN")
+			collider.in_light.emit(self)
 	else:
 		line.add_point(raycast.target_position)
 	
