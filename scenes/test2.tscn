@@ -33,5 +33,9 @@ offset_bottom = 23.0
 visible = false
 
 [node name="LightEmitter2" parent="." instance=ExtResource("3_f2j80")]
-position = Vector2(342, 413)
-rotation = 2.11521
+position = Vector2(151, 40)
+rotation = 0.376778
+
+[node name="LightEmitter" parent="." instance=ExtResource("3_f2j80")]
+position = Vector2(788, 301)
+rotation = 0.785398

@@ -54,36 +54,10 @@ func _physics_process(delta):
 				
 				this_room.child_room.outside_light_location = Vector2(light_x, -50.0)
 				
-				if rotation_degrees:
-					this_room.child_room.outside_light_angle = rotation_degrees
-				else:
-					if Input.is_action_just_pressed("debug"):
-						var collision_marker = Sprite2D.new()
-						collision_marker.set_texture(load("res://sprites/crosshair.png"))
-						collision_marker.position = collision_point
-						get_node("/root").add_child(collision_marker)
-						
-						collision_marker = Sprite2D.new()
-						collision_marker.set_texture(load("res://sprites/crosshair.png"))
-						collision_marker.position = global_position
-						get_node("/root").add_child(collision_marker)
-						
-						collision_marker = Sprite2D.new()
-						collision_marker.set_texture(load("res://sprites/crosshair.png"))
-						collision_marker.position = Vector2(global_position.x, collision_point.y)
-						get_node("/root").add_child(collision_marker)
-						
-						var short_side_length = collision_point.x - global_position.x
-						var long_side_length = collision_point.y - global_position.y
-						
-						var angle = atan(short_side_length / long_side_length)
-						print("angle: ", angle)
-						
-						print("---")
-						print("collision_point: ", collision_point)
-						print("beam.position: ", global_position)
-						print("target: ", to_global(raycast.target_position))
-						print("normal: ", to_global(raycast.get_collision_normal()))
+				var short_side_length = collision_point.x - global_position.x
+				var long_side_length = collision_point.y - global_position.y
+				var angle = rad_to_deg(atan(short_side_length / long_side_length))
+				this_room.child_room.outside_light_angle = -angle
 
 	else:
 		line.add_point(raycast.target_position)
