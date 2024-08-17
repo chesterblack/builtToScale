@@ -1,7 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://0cw82eo45d0h"]
+[gd_scene load_steps=12 format=3 uid="uid://0cw82eo45d0h"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_4u54b"]
 [ext_resource type="Texture2D" uid="uid://ccdyngpd8xv6n" path="res://sprites/terrarium.png" id="1_6trbf"]
+[ext_resource type="Texture2D" uid="uid://dxxub7lwnwhyr" path="res://sprites/reflector.png" id="3_3mv65"]
+[ext_resource type="Script" path="res://reflector.gd" id="3_h5fbm"]
+[ext_resource type="PackedScene" uid="uid://chubj3d0reyhd" path="res://beam.tscn" id="5_qc8yl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1jxxb"]
 atlas = ExtResource("1_6trbf")
@@ -21,6 +24,24 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q40hw"]
 size = Vector2(47, 46)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_i14r6"]
+atlas = ExtResource("3_3mv65")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_61fcl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i14r6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rrbe1"]
+radius = 1.0
+
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_4u54b")
 
@@ -30,3 +51,21 @@ sprite_frames = SubResource("SpriteFrames_e0x6v")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1.5, 6)
 shape = SubResource("RectangleShape2D_q40hw")
+
+[node name="Reflector" type="Area2D" parent="."]
+collision_layer = 3
+collision_mask = 4
+script = ExtResource("3_h5fbm")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Reflector"]
+position = Vector2(0, -32)
+sprite_frames = SubResource("SpriteFrames_61fcl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Reflector"]
+position = Vector2(0, -32)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_rrbe1")
+
+[node name="ReflectionPoint" parent="Reflector" instance=ExtResource("5_qc8yl")]
+position = Vector2(0, -32)
+rotation = 3.14159
