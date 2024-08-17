@@ -6,26 +6,27 @@ const JUMP_VELOCITY = -400.0
 const ROTATE_SPEED = 0.5
 
 var sprite : AnimatedSprite2D
-var reflector : Node2D
+var reflector_arm : Node2D
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 
 func _ready():
-	reflector = $Reflector
+	reflector_arm = $ReflectorArm
 	sprite = $AnimatedSprite2D
 
 
 func _physics_process(delta):
 	movement_control(delta)
 	
-	var rotation_direction = Input.get_axis("rotate_left", "rotate_right")
-	var rotation_velocity = 0
-	if rotation_direction:
-		rotation_velocity = rotation_direction * ROTATE_SPEED
-	
-	reflector.rotation_degrees += rotation_velocity
+	reflector_arm.look_at(get_global_mouse_position())
+	#var rotation_direction = Input.get_axis("rotate_left", "rotate_right")
+	#var rotation_velocity = 0
+	#if rotation_direction:
+		#rotation_velocity = rotation_direction * ROTATE_SPEED
+	#
+	#reflector_arm.rotation_degrees += rotation_velocity
 
 func movement_control(delta):
 	var horizontal_direction = Input.get_axis("move_left", "move_right")

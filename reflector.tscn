@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://5i7v5f5yykqh"]
+
+[ext_resource type="Script" path="res://reflector.gd" id="1_7fmcp"]
+[ext_resource type="Texture2D" uid="uid://dxxub7lwnwhyr" path="res://sprites/reflector.png" id="2_foafb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i14r6"]
+atlas = ExtResource("2_foafb")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_61fcl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i14r6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rrbe1"]
+radius = 4.0
+
+[node name="Reflector" type="Area2D"]
+collision_layer = 3
+collision_mask = 4
+script = ExtResource("1_7fmcp")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_61fcl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_rrbe1")
