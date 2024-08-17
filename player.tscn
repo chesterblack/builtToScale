@@ -66,6 +66,6 @@ position = Vector2(0, -32)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_rrbe1")
 
-[node name="ReflectionPoint" parent="Reflector" instance=ExtResource("5_qc8yl")]
+[node name="ReflectedBeam" parent="Reflector" node_paths=PackedStringArray("ignored_colliders") instance=ExtResource("5_qc8yl")]
 position = Vector2(0, -32)
-rotation = 3.14159
+ignored_colliders = [NodePath("..")]

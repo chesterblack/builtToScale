@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://dgu4c6o5o0dg0"]
+[gd_scene load_steps=7 format=3 uid="uid://dgu4c6o5o0dg0"]
 
 [ext_resource type="PackedScene" uid="uid://s37mbluyidon" path="res://default_tilemap.tscn" id="1_iy6um"]
 [ext_resource type="PackedScene" uid="uid://0cw82eo45d0h" path="res://player.tscn" id="2_eynmx"]
 [ext_resource type="PackedScene" uid="uid://lr04wxy274mm" path="res://light_emitter.tscn" id="3_wljtd"]
 [ext_resource type="PackedScene" uid="uid://bycibs1p4l3al" path="res://goal_crystal.tscn" id="4_uui1a"]
+[ext_resource type="Texture2D" uid="uid://dmg4dnwvw52dy" path="res://sprites/crystal.png" id="5_hia78"]
+[ext_resource type="Script" path="res://Target.gd" id="6_pn38t"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -15,13 +17,12 @@ layer_0/tile_data = PackedInt32Array(65536, 65536, 0, 131072, 65536, 1, 65537, 1
 position = Vector2(120, 454)
 
 [node name="LightEmitter" parent="." instance=ExtResource("3_wljtd")]
-position = Vector2(213, 34)
-beam_angle = -29.5
-
-[node name="Beam" parent="LightEmitter" index="2"]
-rotation = -0.514872
+position = Vector2(395, 349)
 
 [node name="Goal" parent="." instance=ExtResource("4_uui1a")]
 position = Vector2(937, 467)
 
-[editable path="LightEmitter"]
+[node name="Target" type="Sprite2D" parent="."]
+position = Vector2(185, 143)
+texture = ExtResource("5_hia78")
+script = ExtResource("6_pn38t")
