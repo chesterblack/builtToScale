@@ -1,10 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://0cw82eo45d0h"]
+[gd_scene load_steps=11 format=3 uid="uid://0cw82eo45d0h"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_4u54b"]
 [ext_resource type="Texture2D" uid="uid://ccdyngpd8xv6n" path="res://sprites/terrarium.png" id="1_6trbf"]
 [ext_resource type="Texture2D" uid="uid://dxxub7lwnwhyr" path="res://sprites/reflector.png" id="3_3mv65"]
 [ext_resource type="Script" path="res://reflector.gd" id="3_h5fbm"]
-[ext_resource type="PackedScene" uid="uid://chubj3d0reyhd" path="res://beam.tscn" id="5_qc8yl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1jxxb"]
 atlas = ExtResource("1_6trbf")
@@ -65,7 +64,3 @@ sprite_frames = SubResource("SpriteFrames_61fcl")
 position = Vector2(0, -32)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_rrbe1")
-
-[node name="ReflectedBeam" parent="Reflector" node_paths=PackedStringArray("ignored_colliders") instance=ExtResource("5_qc8yl")]
-position = Vector2(0, -32)
-ignored_colliders = [NodePath("..")]
