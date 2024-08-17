@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://bycibs1p4l3al"]
 
-[ext_resource type="Script" path="res://goal_crystal.gd" id="1_3m13u"]
+[ext_resource type="Script" path="res://scripts/goal_crystal.gd" id="1_3m13u"]
 [ext_resource type="Texture2D" uid="uid://fn6txpas8bbc" path="res://sprites/null_crystal.png" id="1_6tpek"]
 [ext_resource type="Texture2D" uid="uid://dmg4dnwvw52dy" path="res://sprites/crystal.png" id="3_vy2dl"]
 

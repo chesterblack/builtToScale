@@ -1,4 +1,4 @@
-extends Area2D
+class_name LightEmitter extends Area2D
 
 @export var beam_angle : float = 0.0
 

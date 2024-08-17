@@ -1,20 +1,24 @@
-extends CharacterBody2D
+class_name Player extends CharacterBody2D
 
 
 const SPEED = 150.0
 const JUMP_VELOCITY = -400.0
 const ROTATE_SPEED = 0.5
 
-var sprite : AnimatedSprite2D
+var glass_sprite : AnimatedSprite2D
+var legs_sprite : AnimatedSprite2D
 var reflector_arm : Node2D
-
-# Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 
 func _ready():
 	reflector_arm = $ReflectorArm
-	sprite = $AnimatedSprite2D
+	glass_sprite = $Sprites/Glass
+	legs_sprite = $Sprites/Legs
+
+
+func get_glass_size() -> Vector2:
+	return glass_sprite.sprite_frames.get_frame_texture(glass_sprite.animation, glass_sprite.frame).get_size()
 
 
 func _physics_process(delta):
@@ -28,6 +32,7 @@ func _physics_process(delta):
 	#
 	#reflector_arm.rotation_degrees += rotation_velocity
 
+
 func movement_control(delta):
 	var horizontal_direction = Input.get_axis("move_left", "move_right")
 	if horizontal_direction:
@@ -38,11 +43,11 @@ func movement_control(delta):
 	if is_on_wall_only():
 		var wall_normal = get_wall_normal()
 		if wall_normal.x > 0:
-			sprite.rotation_degrees = 90
+			$Sprites.rotation_degrees = 90
 		else:
-			sprite.rotation_degrees = -90
+			$Sprites.rotation_degrees = -90
 	else:
-		sprite.rotation_degrees = 0
+		$Sprites.rotation_degrees = 0
 		
 	if is_on_wall():
 		var vertical_direction = Input.get_axis("move_up", "move_down")

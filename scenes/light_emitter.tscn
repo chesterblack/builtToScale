@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://lr04wxy274mm"]
 
 [ext_resource type="Texture2D" uid="uid://dmg4dnwvw52dy" path="res://sprites/crystal.png" id="1_ndrh6"]
-[ext_resource type="Script" path="res://light_emitter.gd" id="1_y5iuc"]
-[ext_resource type="PackedScene" uid="uid://chubj3d0reyhd" path="res://beam.tscn" id="3_3hpdt"]
+[ext_resource type="Script" path="res://scripts/light_emitter.gd" id="1_y5iuc"]
+[ext_resource type="PackedScene" uid="uid://chubj3d0reyhd" path="res://scenes/beam.tscn" id="3_3hpdt"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v3l4h"]
 atlas = ExtResource("1_ndrh6")

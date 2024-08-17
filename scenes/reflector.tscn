@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://5i7v5f5yykqh"]
 
-[ext_resource type="Script" path="res://reflector.gd" id="1_7fmcp"]
+[ext_resource type="Script" path="res://scripts/reflector.gd" id="1_7fmcp"]
 [ext_resource type="Texture2D" uid="uid://dxxub7lwnwhyr" path="res://sprites/reflector.png" id="2_foafb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i14r6"]
