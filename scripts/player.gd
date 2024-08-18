@@ -8,37 +8,61 @@ const SLOW_SPEED = 15.0
 const JUMP_VELOCITY = -400.0
 const ROTATE_SPEED = 0.5
 
-var glass_sprite : AnimatedSprite2D
-var legs_sprite : AnimatedSprite2D
+@onready var audio_player : AudioStreamPlayer2D = $AudioStreamPlayer2D
+@onready var glass_sprite : AnimatedSprite2D = $Sprites/Glass
+@onready var legs_sprite : AnimatedSprite2D = $Sprites/Legs
+@onready var control_arm : Node2D = $ControlArm
+
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var can_move : bool = true
 var rotation_locked : bool = false
-var control_arm : Node2D
+var is_walking : bool = false
+var footstep : bool = false
+var grounded : bool = true
+
 var held_item : Node2D
 var held_pickup : Pickup
 var pickup_in_range : Pickup
 
 
 func _ready():
-	control_arm = $ControlArm
-	glass_sprite = $Sprites/Glass
-	legs_sprite = $Sprites/Legs
-	
 	pickup_entered.connect(_on_pickup_entered)
 	pickup_exited.connect(_on_pickup_exited)
+	Global.win.connect(_on_win)
 
 
 func _process(_delta):
+	if is_on_floor() or is_on_wall():
+		if !grounded:
+			var land_sound = load("res://sounds/land.wav")
+			Global.force_sound(audio_player, land_sound)
+		grounded = true
+	else:
+		grounded = false
+	
 	if Input.is_action_just_pressed("pickup"):
 		if pickup_in_range:
 			pick_up_item(pickup_in_range)
 		else:
 			drop_item()
+	
+	if is_walking:
+		var footstep_sound
+		if footstep:
+			footstep_sound = load("res://sounds/footstep_shaker.wav")
+		else:
+			footstep_sound = load("res://sounds/footstep2_shaker.wav")
+		
+		if !audio_player.is_playing():
+			footstep = !footstep
+		
+		Global.queue_sound(audio_player, footstep_sound)
 
 
 func _physics_process(delta):
 	movement_control(delta)
 	
-	if Input.is_action_just_pressed("lock_rotation"):
+	if Input.is_action_just_pressed("lock_rotation") and can_move:
 		rotation_locked = !rotation_locked
 	
 	if !rotation_locked:
@@ -57,6 +81,20 @@ func _on_pickup_exited():
 	pickup_in_range = null
 	
 	Global.current_room.button_prompt_label.text = ""
+
+
+func _on_win():
+	immobilise()
+
+
+func immobilise():
+	rotation_locked = true
+	can_move = false
+
+
+func mobilise():
+	rotation_locked = false
+	can_move = true
 
 
 func pick_up_item(item_pickup : Pickup):
@@ -78,9 +116,10 @@ func pick_up_item(item_pickup : Pickup):
 
 
 func drop_item():
-	print("dropping ", held_item)
 	if !held_item:
 		return
+	
+	Global.force_sound(audio_player, load("res://sounds/throw.wav"))
 	
 	# Swap the item from the control arm back to the original pickup
 	control_arm.remove_child(held_item)
@@ -102,6 +141,11 @@ func drop_item():
 
 
 func movement_control(delta):
+	is_walking = false
+	
+	if !can_move:
+		return
+	
 	var move_speed = SPEED
 	if Input.is_action_pressed("slow_walk"):
 		move_speed = SLOW_SPEED
@@ -109,6 +153,8 @@ func movement_control(delta):
 	var horizontal_direction = Input.get_axis("move_left", "move_right")
 	if horizontal_direction:
 		velocity.x = horizontal_direction * move_speed
+		if is_on_floor_only():
+			is_walking = true
 	else:
 		velocity.x = move_toward(velocity.x, 0, move_speed)
 	
@@ -125,6 +171,8 @@ func movement_control(delta):
 		var vertical_direction = Input.get_axis("move_up", "move_down")
 		if vertical_direction:
 			velocity.y = vertical_direction * move_speed
+			if is_on_wall_only():
+				is_walking = true
 		else:
 			velocity.y = move_toward(velocity.y, 0, move_speed)
 	
@@ -132,6 +180,8 @@ func movement_control(delta):
 		velocity.y += gravity * delta
 	
 	if Input.is_action_just_pressed("jump") and is_on_floor():
+		var jump_sound = load("res://sounds/jump.wav")
+		Global.force_sound(audio_player, jump_sound)
 		velocity.y = JUMP_VELOCITY
 	
 	move_and_slide()

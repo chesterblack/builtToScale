@@ -13,6 +13,12 @@ func _ready():
 func _on_body_entered(body):
 	if body is Player:
 		body.pickup_entered.emit(self)
+	else:
+		var audio_player = $AudioStreamPlayer2D
+		var sound = load("res://sounds/footstep_woodblock.wav")
+		audio_player.stream = sound
+		audio_player.stop()
+		audio_player.play()
 
 
 func _on_body_exited(body):

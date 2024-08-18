@@ -3,9 +3,12 @@ class_name Room extends Node2D
 signal entered
 signal exited
 
-@onready var button_prompt_label : Label = $ButtonPromptLabel
+@export_file("*.tscn") var next_level : String
 
-var root : Node
+@onready var button_prompt_label : Label = $UI/HUD/ButtonPromptLabel
+@onready var audio_player : AudioStreamPlayer2D = $AudioStreamPlayer2D
+@onready var root : Node = get_node("/root")
+
 var parent_room : Room
 var child_room : Room
 var goals : Array[Goal] = []
@@ -17,7 +20,8 @@ var outside_light_width : float
 
 
 func _ready():
-	root = get_node("/root")
+	button_prompt_label.text = ""
+	$UI/HUD/NextLevel.next_level = next_level
 	
 	if get_parent() is Room:
 		parent_room = get_parent()
@@ -28,6 +32,7 @@ func _ready():
 			remove_child(child_room)
 	
 	entered.connect(_on_entered)
+	Global.win.connect(_on_win)
 
 
 func _process(_delta):
@@ -37,12 +42,13 @@ func _process(_delta):
 		zoom_out()
 	
 	var win = true
-	for goal in goals:
-		if !goal.is_lit:
-			win = false
+	if goals:
+		for goal in goals:
+			if !goal.is_lit:
+				win = false
 	
 	if win:
-		Global.win()
+		Global.win.emit()
 
 
 func zoom_in():
@@ -79,4 +85,8 @@ func _on_entered():
 		outside_light.position = outside_light_location
 		outside_light.beam_width = outside_light_width
 		add_child(light_emitter)
-		
+
+
+func _on_win():
+	$UI/HUD/WinLabel.visible = true
+	$UI/HUD/NextLevel.visible = true

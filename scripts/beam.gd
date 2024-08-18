@@ -26,7 +26,6 @@ func test_function():
 
 
 func _physics_process(_delta):
-	is_reflected = false
 	raycast.target_position = raycast.target_position.normalized() * length
 	
 	line.clear_points()
@@ -38,7 +37,12 @@ func _physics_process(_delta):
 		line.add_point(to_local(raycast.get_collision_point()))
 		
 		if collider not in ignored_colliders and collider is Reflector:
+			if !is_reflected:
+				var sound = load("res://sounds/tink.wav")
+				Global.queue_sound(collider.audio_player, sound)
 			create_reflection()
+		else:
+			is_reflected = false
 		  
 		if collider is Goal:
 			collider.in_light.emit(self)
@@ -46,8 +50,8 @@ func _physics_process(_delta):
 		if collider is Player:
 			if "child_room" in Global.current_room and Global.current_room.child_room is Room:
 				create_subroom_beam()
-
 	else:
+		is_reflected = false
 		line.add_point(raycast.target_position)
 	
 	line.width = width

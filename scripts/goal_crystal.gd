@@ -30,4 +30,7 @@ func _process(_delta):
 
 
 func _on_in_light(trigger):
+	if !is_lit:
+		var sound = load("res://sounds/lightup.wav")
+		Global.queue_sound($AudioStreamPlayer2D, sound)
 	beam = trigger
