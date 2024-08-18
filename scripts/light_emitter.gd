@@ -14,7 +14,7 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if "length" in beam:
 		beam.length = beam_length
 	if "raycast" in beam:

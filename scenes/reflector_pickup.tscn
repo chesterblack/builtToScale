@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://dc4knfrpsi6vu"]
+
+[ext_resource type="Script" path="res://pickup.gd" id="1_3vi6e"]
+[ext_resource type="PackedScene" uid="uid://5i7v5f5yykqh" path="res://scenes/reflector.tscn" id="2_lcc46"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e5ep7"]
+radius = 19.2354
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8v2dq"]
+radius = 2.00001
+
+[node name="ReflectorPickup" type="RigidBody2D"]
+max_contacts_reported = 4
+contact_monitor = true
+script = ExtResource("1_3vi6e")
+
+[node name="PickupRadius" type="Area2D" parent="."]
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupRadius"]
+shape = SubResource("CircleShape2D_e5ep7")
+debug_color = Color(0.588235, 0.545098, 0.219608, 0.419608)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_8v2dq")
+
+[node name="Item" parent="." instance=ExtResource("2_lcc46")]

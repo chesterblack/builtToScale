@@ -6,7 +6,7 @@ signal exited
 var root : Node
 var parent_room : Room
 var child_room : Room
-var level : Node2D
+var goals : Array[Goal] = []
 
 var outside_light : Area2D
 var outside_light_location : Vector2 = Vector2.ZERO
@@ -28,11 +28,19 @@ func _ready():
 	entered.connect(_on_entered)
 
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("zoom_in") and child_room:
 		zoom_in()
 	if Input.is_action_just_pressed("zoom_out") and parent_room:
 		zoom_out()
+	
+	var win = true
+	for goal in goals:
+		if !goal.is_lit:
+			win = false
+	
+	if win:
+		Global.win()
 
 
 func zoom_in():
@@ -56,6 +64,8 @@ func zoom_out():
 
 
 func _on_entered():
+	Global.current_room = self
+	
 	if outside_light:
 		outside_light.queue_free()
 		outside_light = null

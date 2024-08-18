@@ -25,7 +25,7 @@ func test_function():
 	return "exists"
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	is_reflected = false
 	raycast.target_position = raycast.target_position.normalized() * length
 	
@@ -44,8 +44,7 @@ func _physics_process(delta):
 			collider.in_light.emit(self)
 		
 		if collider is Player:
-			var this_room = get_node("/root/Room")
-			if this_room and "child_room" in this_room:
+			if "child_room" in Global.current_room and Global.current_room.child_room is Room:
 				create_subroom_beam()
 
 	else:
@@ -59,7 +58,6 @@ func _physics_process(delta):
 
 
 func create_subroom_beam():
-	var this_room = get_node("/root/Room")
 	var collision_point = raycast.get_collision_point()
 	
 	var collision_x = collision_point.x
@@ -69,9 +67,10 @@ func create_subroom_beam():
 	var percentage = (collision_left / player_width) * 100
 	var room_width = get_viewport().size.x
 	var light_x = (percentage * room_width) / 100
-	this_room.child_room.outside_light_location = Vector2(light_x, -50.0)
-	this_room.child_room.outside_light_angle = raycast.target_position
-	this_room.child_room.outside_light_width = width * 5
+	
+	Global.current_room.child_room.outside_light_location = Vector2(light_x, -50.0)
+	Global.current_room.child_room.outside_light_angle = raycast.target_position
+	Global.current_room.child_room.outside_light_width = width * 3
 
 
 func create_reflection():
