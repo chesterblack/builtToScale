@@ -10,7 +10,8 @@ var level : Node2D
 
 var outside_light : Area2D
 var outside_light_location : Vector2 = Vector2.ZERO
-var outside_light_angle : float = 0.0
+var outside_light_angle : Vector2 = Vector2.ZERO
+var outside_light_width : float
 
 
 func _ready():
@@ -64,5 +65,6 @@ func _on_entered():
 		outside_light = light_emitter
 		outside_light.beam_angle = outside_light_angle
 		outside_light.position = outside_light_location
+		outside_light.beam_width = outside_light_width
 		add_child(light_emitter)
 		

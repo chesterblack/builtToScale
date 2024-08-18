@@ -37,11 +37,6 @@ func _physics_process(delta):
 		#$Label.text = str(collider) + "\n" + str(ignored_colliders)
 		line.add_point(to_local(raycast.get_collision_point()))
 		
-		var collision_point = raycast.get_collision_point()
-		var short_side_length = collision_point.x - global_position.x
-		var long_side_length = collision_point.y - global_position.y
-		var bounce_angle = rad_to_deg(atan(short_side_length / long_side_length))
-		
 		if collider not in ignored_colliders and collider is Reflector:
 			create_reflection()
 		  
@@ -51,16 +46,7 @@ func _physics_process(delta):
 		if collider is Player:
 			var this_room = get_node("/root/Room")
 			if this_room and "child_room" in this_room:
-				var collision_x = collision_point.x
-				var player_width = collider.get_glass_size().x
-				var player_left_side = collider.position.x - (player_width / 2)
-				var collision_left = collision_x - player_left_side
-				var percentage = (collision_left / player_width) * 100
-				var room_width = get_viewport().size.x
-				var light_x = (percentage * room_width) / 100
-				
-				this_room.child_room.outside_light_location = Vector2(light_x, -50.0)
-				this_room.child_room.outside_light_angle = -bounce_angle
+				create_subroom_beam()
 
 	else:
 		line.add_point(raycast.target_position)
@@ -72,21 +58,38 @@ func _physics_process(delta):
 		reflected_beam = null
 
 
+func create_subroom_beam():
+	var this_room = get_node("/root/Room")
+	var collision_point = raycast.get_collision_point()
+	
+	var collision_x = collision_point.x
+	var player_width = collider.get_glass_size().x
+	var player_left_side = collider.position.x - (player_width / 2)
+	var collision_left = collision_x - player_left_side
+	var percentage = (collision_left / player_width) * 100
+	var room_width = get_viewport().size.x
+	var light_x = (percentage * room_width) / 100
+	this_room.child_room.outside_light_location = Vector2(light_x, -50.0)
+	this_room.child_room.outside_light_angle = raycast.target_position
+	this_room.child_room.outside_light_width = width * 5
+
+
 func create_reflection():
 	if !reflected_beam:
 		reflected_beam = load("res://scenes/beam.tscn").instantiate()
 		reflected_beam.ignored_colliders = []
 		reflected_beam.ignored_colliders.append(collider)
+		reflected_beam.width = width
 		add_child(reflected_beam)
 	
 	is_reflected = true
 	var collision_point = raycast.get_collision_point()
 	var collision_normal = raycast.get_collision_normal().normalized()
-	var reflection = collision_normal.bounce(collision_normal).normalized() * length
+	var reflection = raycast.target_position.bounce(collision_normal).normalized() * length
 	
 	reflected_beam.reflect_beam(collision_point, reflection)
 
 
 func reflect_beam(collision_point, reflection):
 	global_position = collision_point
-	raycast.target_position = -reflection
+	raycast.target_position = reflection

@@ -22,7 +22,7 @@ position = Vector2(120, 454)
 position = Vector2(937, 199)
 
 [node name="Reflector" parent="." instance=ExtResource("5_ema7p")]
-position = Vector2(67, 248)
+position = Vector2(57, 311)
 rotation = -1.8483
 
 [node name="Label" type="Label" parent="."]
@@ -33,7 +33,7 @@ offset_bottom = 23.0
 visible = false
 
 [node name="LightEmitter2" parent="." instance=ExtResource("3_f2j80")]
-position = Vector2(138, 72)
+position = Vector2(58, 58)
 
 [node name="LightEmitter" parent="." instance=ExtResource("3_f2j80")]
 position = Vector2(515, 70)
