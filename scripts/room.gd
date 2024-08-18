@@ -3,6 +3,8 @@ class_name Room extends Node2D
 signal entered
 signal exited
 
+@onready var button_prompt_label : Label = $ButtonPromptLabel
+
 var root : Node
 var parent_room : Room
 var child_room : Room

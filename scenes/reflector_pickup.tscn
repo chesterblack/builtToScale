@@ -9,10 +9,11 @@ radius = 19.2354
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8v2dq"]
 radius = 2.00001
 
-[node name="ReflectorPickup" type="RigidBody2D"]
+[node name="ReflectorPickup" type="RigidBody2D" node_paths=PackedStringArray("item")]
 max_contacts_reported = 4
 contact_monitor = true
 script = ExtResource("1_3vi6e")
+item = NodePath("Reflector")
 
 [node name="PickupRadius" type="Area2D" parent="."]
 collision_layer = 8
@@ -25,4 +26,4 @@ debug_color = Color(0.588235, 0.545098, 0.219608, 0.419608)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_8v2dq")
 
-[node name="Item" parent="." instance=ExtResource("2_lcc46")]
+[node name="Reflector" parent="." instance=ExtResource("2_lcc46")]

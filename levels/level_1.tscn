@@ -28,3 +28,10 @@ rotation = 0.349066
 
 [node name="ReflectorPickup2" parent="." instance=ExtResource("6_erxsw")]
 position = Vector2(404, 499)
+
+[node name="ButtonPromptLabel" type="Label" parent="."]
+offset_left = 23.0
+offset_top = 544.0
+offset_right = 157.0
+offset_bottom = 627.0
+theme_override_font_sizes/font_size = 60

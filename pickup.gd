@@ -1,10 +1,9 @@
 class_name Pickup extends RigidBody2D
 
-var item : Node2D
+@export var item : Node2D
 var pickup_radius : Area2D
 
 func _ready():
-	item = $Item
 	pickup_radius = $PickupRadius
 	
 	pickup_radius.body_entered.connect(_on_body_entered)

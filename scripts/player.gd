@@ -47,10 +47,16 @@ func _physics_process(delta):
 
 func _on_pickup_entered(item_pickup : Pickup):
 	pickup_in_range = item_pickup
+	
+	var action_events = InputMap.action_get_events("pickup")[0]
+	var key_string = OS.get_keycode_string(action_events.physical_keycode)
+	Global.current_room.button_prompt_label.text = "Press " + key_string + " to pick up " + item_pickup.item.name
 
 
 func _on_pickup_exited():
 	pickup_in_range = null
+	
+	Global.current_room.button_prompt_label.text = ""
 
 
 func pick_up_item(item_pickup : Pickup):
