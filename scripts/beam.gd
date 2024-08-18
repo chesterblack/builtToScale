@@ -1,3 +1,5 @@
+@tool
+
 class_name Beam extends Node2D
 
 @export var ignored_colliders : Array
@@ -8,6 +10,7 @@ var line : Line2D
 var is_reflected : bool = false
 var reflected_beam : Node2D
 var collider : Node2D
+var width : float = 2.0
 
 
 func _ready():
@@ -34,16 +37,20 @@ func _physics_process(delta):
 		#$Label.text = str(collider) + "\n" + str(ignored_colliders)
 		line.add_point(to_local(raycast.get_collision_point()))
 		
+		var collision_point = raycast.get_collision_point()
+		var short_side_length = collision_point.x - global_position.x
+		var long_side_length = collision_point.y - global_position.y
+		var bounce_angle = rad_to_deg(atan(short_side_length / long_side_length))
+		
 		if collider not in ignored_colliders and collider is Reflector:
 			create_reflection()
-		
+		  
 		if collider is Goal:
 			collider.in_light.emit(self)
 		
 		if collider is Player:
 			var this_room = get_node("/root/Room")
 			if this_room and "child_room" in this_room:
-				var collision_point = raycast.get_collision_point()
 				var collision_x = collision_point.x
 				var player_width = collider.get_glass_size().x
 				var player_left_side = collider.position.x - (player_width / 2)
@@ -53,14 +60,12 @@ func _physics_process(delta):
 				var light_x = (percentage * room_width) / 100
 				
 				this_room.child_room.outside_light_location = Vector2(light_x, -50.0)
-				
-				var short_side_length = collision_point.x - global_position.x
-				var long_side_length = collision_point.y - global_position.y
-				var angle = rad_to_deg(atan(short_side_length / long_side_length))
-				this_room.child_room.outside_light_angle = -angle
+				this_room.child_room.outside_light_angle = -bounce_angle
 
 	else:
 		line.add_point(raycast.target_position)
+	
+	line.width = width
 	
 	if !is_reflected and reflected_beam:
 		reflected_beam.queue_free()
@@ -77,8 +82,7 @@ func create_reflection():
 	is_reflected = true
 	var collision_point = raycast.get_collision_point()
 	var collision_normal = raycast.get_collision_normal().normalized()
-	var forward = collision_point - raycast.global_position
-	var reflection = forward.reflect(collision_normal).normalized() * length
+	var reflection = collision_normal.bounce(collision_normal).normalized() * length
 	
 	reflected_beam.reflect_beam(collision_point, reflection)
 

@@ -6,7 +6,7 @@
 script = ExtResource("1_fa58b")
 
 [node name="Line2D" type="Line2D" parent="."]
-points = PackedVector2Array(-1, 1132, -1, -1)
+position = Vector2(0, 1)
 default_color = Color(0.913725, 0.690196, 0.258824, 1)
 
 [node name="RayCast2D" type="RayCast2D" parent="."]

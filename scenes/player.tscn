@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_4u54b"]
 [ext_resource type="Texture2D" uid="uid://ccdyngpd8xv6n" path="res://sprites/terrarium.png" id="1_6trbf"]
 [ext_resource type="Texture2D" uid="uid://djbfbuwakya7u" path="res://sprites/terrarium-glass.png" id="3_0viq8"]
-[ext_resource type="PackedScene" uid="uid://c1pqowxafu56r" path="res://scenes/circle_reflector.tscn" id="3_bsqjo"]
+[ext_resource type="PackedScene" uid="uid://5i7v5f5yykqh" path="res://scenes/reflector.tscn" id="4_j37rl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1jxxb"]
 atlas = ExtResource("1_6trbf")
@@ -57,5 +57,6 @@ shape = SubResource("RectangleShape2D_q40hw")
 
 [node name="ReflectorArm" type="Node2D" parent="."]
 
-[node name="Reflector" parent="ReflectorArm" instance=ExtResource("3_bsqjo")]
-position = Vector2(45, -5)
+[node name="Reflector" parent="ReflectorArm" instance=ExtResource("4_j37rl")]
+position = Vector2(39, 0)
+rotation = 1.5708
