@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://b7du8lopcbgx5"]
+
+[ext_resource type="PackedScene" uid="uid://b2kame6gxgahb" path="res://levels/room_template.tscn" id="1_njuxv"]
+[ext_resource type="PackedScene" uid="uid://lr04wxy274mm" path="res://doodads/light_emitter.tscn" id="2_fmsk3"]
+[ext_resource type="PackedScene" uid="uid://0cw82eo45d0h" path="res://doodads/player.tscn" id="3_rvlhv"]
+[ext_resource type="PackedScene" uid="uid://c6bew6yfbsq0n" path="res://levels/level_6_1.tscn" id="3_rwxae"]
+
+[node name="Room" instance=ExtResource("1_njuxv")]
+next_level = "res://levels/level_7.tscn"
+
+[node name="LightEmitter" parent="." index="4" instance=ExtResource("2_fmsk3")]
+position = Vector2(186, 109)
+beam_angle = Vector2(1, 1)
+
+[node name="Player" parent="." index="5" instance=ExtResource("3_rvlhv")]
+position = Vector2(333, 507)
+
+[node name="Room" parent="." index="6" instance=ExtResource("3_rwxae")]
+visible = false

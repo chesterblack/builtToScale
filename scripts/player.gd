@@ -79,7 +79,6 @@ func _on_pickup_entered(item_pickup : Pickup):
 
 func _on_pickup_exited():
 	pickup_in_range = null
-	
 	Global.current_room.button_prompt_label.text = ""
 
 
@@ -106,7 +105,7 @@ func pick_up_item(item_pickup : Pickup):
 	item.get_parent().remove_child(item)
 	control_arm.add_child(item)
 	item.position = Vector2(30, 0)
-	item.rotation_degrees = 90
+	item.rotation_degrees = item_pickup.pickup_rotation
 	
 	# Orphan the pickup. Don't delete it, as we'll reparent it when dropping
 	item_pickup.get_parent().remove_child(item_pickup)
@@ -125,16 +124,19 @@ func drop_item():
 	control_arm.remove_child(held_item)
 	held_pickup.add_child(held_item)
 	held_item.position = Vector2.ZERO
-	held_item.rotation_degrees = 0
+	held_item.global_rotation_degrees = 0
 	
 	# Add the pickup back into the world
 	held_pickup.global_position = Vector2(global_position.x, global_position.y - 35)
 	get_parent().add_child(held_pickup)
 	
 	# Lob it
-	var throw_vector = global_position.direction_to(get_global_mouse_position()).normalized() * 450
+	var lob_speed = 200 if Input.is_action_pressed("slow_walk") else 450
+	var throw_vector = global_position.direction_to(get_global_mouse_position()).normalized() * lob_speed
 	held_pickup.apply_impulse(throw_vector)
-	held_pickup.apply_torque_impulse(throw_vector.normalized().x * randf_range(200, 1000))
+	
+	if !Input.is_action_pressed("slow_walk"):
+		held_pickup.apply_torque_impulse(throw_vector.normalized().x * randf_range(200, 1000))
 	
 	held_item = null
 	held_pickup = null

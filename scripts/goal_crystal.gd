@@ -15,7 +15,9 @@ func _ready():
 	if current_room:
 		while current_room.parent_room is Room:
 			current_room = current_room.parent_room
-		current_room.goals.append(self)
+		
+		Global.goals.append(self)
+
 
 func _process(_delta):
 	is_lit = false

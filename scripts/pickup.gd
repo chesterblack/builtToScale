@@ -1,7 +1,10 @@
 class_name Pickup extends RigidBody2D
 
 @export var item : Node2D
+@export var pickup_rotation : float = 90.0
+
 var pickup_radius : Area2D
+
 
 func _ready():
 	pickup_radius = $PickupRadius

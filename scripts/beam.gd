@@ -79,7 +79,7 @@ func create_subroom_beam():
 
 func create_reflection():
 	if !reflected_beam:
-		reflected_beam = load("res://scenes/beam.tscn").instantiate()
+		reflected_beam = load("res://misc_scenes/beam.tscn").instantiate()
 		reflected_beam.ignored_colliders = []
 		reflected_beam.ignored_colliders.append(collider)
 		reflected_beam.width = width

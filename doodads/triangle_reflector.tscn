@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://dcnvbhrnalk3p"]
+
+[ext_resource type="Script" path="res://scripts/reflector.gd" id="1_l6bmx"]
+[ext_resource type="Texture2D" uid="uid://iussboey175h" path="res://sprites/triangle-reflector.png" id="2_0j84e"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4swse"]
+atlas = ExtResource("2_0j84e")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_61fcl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4swse")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rrbe1"]
+radius = 2.82843
+
+[node name="Reflector" type="Area2D"]
+collision_layer = 3
+collision_mask = 4
+script = ExtResource("1_l6bmx")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_61fcl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = -0.785398
+shape = SubResource("CapsuleShape2D_rrbe1")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]

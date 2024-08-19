@@ -1,0 +1,56 @@
+[gd_scene load_steps=7 format=3 uid="uid://bd68y1babhirv"]
+
+[ext_resource type="Script" path="res://scripts/pickup.gd" id="1_8nmoa"]
+
+[sub_resource type="Gradient" id="Gradient_yuogw"]
+colors = PackedColorArray(0, 0.292307, 0.602056, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_t3dyw"]
+gradient = SubResource("Gradient_yuogw")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6v168"]
+particle_flag_disable_z = true
+velocity_pivot = Vector3(1, 0, 0)
+direction = Vector3(1, -1, 0)
+spread = 180.0
+initial_velocity_min = 38.17
+initial_velocity_max = 168.48
+gravity = Vector3(0, 98, 0)
+scale_max = 4.0
+color = Color(0, 0.909804, 0.992157, 1)
+color_ramp = SubResource("GradientTexture1D_t3dyw")
+hue_variation_max = 0.05
+turbulence_enabled = true
+turbulence_noise_strength = 2.02
+turbulence_noise_speed = Vector3(1, 4, 0)
+turbulence_initial_displacement_min = 27.7
+turbulence_initial_displacement_max = 36.5
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e5ep7"]
+radius = 19.2354
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dbsh4"]
+size = Vector2(19.799, 19.799)
+
+[node name="Pickup" type="RigidBody2D"]
+max_contacts_reported = 4
+contact_monitor = true
+script = ExtResource("1_8nmoa")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+amount = 30
+amount_ratio = 0.8346
+process_material = SubResource("ParticleProcessMaterial_6v168")
+
+[node name="PickupRadius" type="Area2D" parent="."]
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupRadius"]
+shape = SubResource("CircleShape2D_e5ep7")
+debug_color = Color(0.588235, 0.545098, 0.219608, 0.419608)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_dbsh4")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]

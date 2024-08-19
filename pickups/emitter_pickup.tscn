@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://ebdhe3cp5s4t"]
+
+[ext_resource type="PackedScene" uid="uid://bd68y1babhirv" path="res://pickups/pickup.tscn" id="1_ytx0e"]
+[ext_resource type="PackedScene" uid="uid://lr04wxy274mm" path="res://doodads/light_emitter.tscn" id="2_wb1j0"]
+
+[node name="Pickup" node_paths=PackedStringArray("item") instance=ExtResource("1_ytx0e")]
+item = NodePath("Beam Emitter")
+pickup_rotation = -90.0
+
+[node name="Beam Emitter" parent="." index="2" instance=ExtResource("2_wb1j0")]
+
+[node name="CollisionShape2D" parent="." index="3"]
+position = Vector2(7.27596e-12, -1.90735e-06)
+rotation = 0.785398

@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cpcvdhrfipapk"]
+
+[ext_resource type="PackedScene" uid="uid://bd68y1babhirv" path="res://pickups/pickup.tscn" id="1_ihl42"]
+[ext_resource type="PackedScene" uid="uid://dcnvbhrnalk3p" path="res://doodads/triangle_reflector.tscn" id="2_ula7t"]
+
+[node name="ReflectorPickup" node_paths=PackedStringArray("item") instance=ExtResource("1_ihl42")]
+item = NodePath("Reflector")
+pickup_rotation = 45.0
+
+[node name="CollisionShape2D" parent="." index="2"]
+disabled = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="3"]
+polygon = PackedVector2Array(-10, -10, -10, 10, 10, 10)
+
+[node name="Reflector" parent="." index="4" instance=ExtResource("2_ula7t")]
