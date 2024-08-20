@@ -47,6 +47,7 @@ func _process(_delta):
 			drop_item()
 	
 	if is_walking:
+		legs_sprite.play("walk")
 		var footstep_sound
 		if footstep:
 			footstep_sound = load("res://sounds/footstep_shaker.wav")
@@ -57,6 +58,8 @@ func _process(_delta):
 			footstep = !footstep
 		
 		Global.queue_sound(audio_player, footstep_sound)
+	else:
+		legs_sprite.play("idle")
 
 
 func _physics_process(delta):

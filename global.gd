@@ -6,6 +6,10 @@ signal next_level
 signal zoom_in
 signal zoom_out
 
+var backing_tracks : Array[AudioStream] = []
+var audio_player : AudioStreamPlayer2D
+var track_playing : int
+
 var current_room : Room
 var goals : Array[Goal] = []
 var transition_sprite : AnimatedSprite2D
@@ -14,6 +18,17 @@ var can_transition : bool = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	audio_player = AudioStreamPlayer2D.new()
+	add_child(audio_player)
+	
+	backing_tracks.append(load("res://sounds/ambience3.wav"))
+	backing_tracks.append(load("res://sounds/ambience2.wav"))
+	
+	track_playing = 0
+	audio_player.stream = backing_tracks[track_playing]
+	audio_player.play()
+	audio_player.finished.connect(_on_audio_player_finished)
+	
 	var transition_canvas = CanvasLayer.new()
 	transition_sprite = load("res://misc_scenes/transition.tscn").instantiate()
 	transition_sprite.visible = false
@@ -47,6 +62,15 @@ func _process(_delta):
 		
 		if can_win:
 			win.emit()
+
+
+func _on_audio_player_finished():
+	track_playing += 1
+	if track_playing >= backing_tracks.size():
+		track_playing = 0
+	
+	audio_player.stream = backing_tracks[track_playing]
+	audio_player.play()
 
 
 func _on_zoom_in():

@@ -1,5 +1,49 @@
-[gd_scene load_steps=2 format=3 uid="uid://dw6ogqc3hm8m5"]
+[gd_scene load_steps=4 format=3 uid="uid://dw6ogqc3hm8m5"]
 
 [ext_resource type="PackedScene" uid="uid://b2kame6gxgahb" path="res://levels/room_template.tscn" id="1_pu2uf"]
+[ext_resource type="PackedScene" uid="uid://0cw82eo45d0h" path="res://doodads/player.tscn" id="2_yd4v1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ek42i"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="Room" instance=ExtResource("1_pu2uf")]
+
+[node name="Panel" type="Panel" parent="." index="4"]
+offset_left = 370.0
+offset_top = 163.0
+offset_right = 803.0
+offset_bottom = 357.0
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_ek42i")
+
+[node name="TutorialLabel" type="Label" parent="Panel" index="0"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -117.5
+offset_top = -40.5
+offset_right = 117.5
+offset_bottom = 40.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 28
+text = "Thanks for playing!
+
+Programming: Chester Black
+Art & Sound: Kipbite"
+horizontal_alignment = 1
+
+[node name="Player" parent="." index="5" instance=ExtResource("2_yd4v1")]
+position = Vector2(592, 485)
