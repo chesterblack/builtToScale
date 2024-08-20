@@ -9,8 +9,9 @@
 script = ExtResource("1_1lejg")
 
 [node name="TextureRect" type="TextureRect" parent="."]
-offset_right = 1152.0
-offset_bottom = 640.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+scale = Vector2(0.598922, 0.59593)
 texture = ExtResource("2_emski")
 
 [node name="TileMap" parent="." instance=ExtResource("3_ulf8n")]
