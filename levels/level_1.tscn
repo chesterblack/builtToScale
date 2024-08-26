@@ -37,9 +37,11 @@ layer_0/tile_data = PackedInt32Array(0, 65536, 1, 65536, 196608, 0, 131072, 1310
 
 [node name="Goal" parent="." instance=ExtResource("3_hh8s7")]
 position = Vector2(1065, 473)
+color = 2
 
 [node name="LightEmitter" parent="." instance=ExtResource("4_wkpdv")]
 position = Vector2(583, 33)
+beam_color = 2
 
 [node name="Player" parent="." instance=ExtResource("5_810xh")]
 position = Vector2(133, 488)

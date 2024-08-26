@@ -2,9 +2,11 @@ class_name Goal extends Area2D
 
 signal in_light
 
+@export var color : Beam.BeamColor = Beam.BeamColor.GOLD
+
 var sprite : AnimatedSprite2D
 var is_lit : bool = false
-var beam : Node2D
+var beam : Beam
 
 
 func _ready():
@@ -22,7 +24,7 @@ func _ready():
 func _process(_delta):
 	is_lit = false
 	if is_instance_valid(beam):
-		if beam.collider == self:
+		if beam.collider == self and beam.beam_color == color:
 			is_lit = true
 	
 	if is_lit:

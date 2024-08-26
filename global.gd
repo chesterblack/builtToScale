@@ -10,6 +10,7 @@ var backing_tracks : Array[AudioStream] = []
 var audio_player : AudioStreamPlayer2D
 var track_playing : int
 
+var current_level : int = 1
 var current_room : Room
 var goals : Array[Goal] = []
 var transition_sprite : AnimatedSprite2D
@@ -35,6 +36,7 @@ func _ready():
 	transition_canvas.add_child(transition_sprite)
 	add_child(transition_canvas)
 	
+	
 	next_level.connect(_on_next_level)
 	zoom_in.connect(_on_zoom_in)
 	zoom_out.connect(_on_zoom_out)
@@ -46,6 +48,8 @@ func _ready():
 
 
 func _process(_delta):
+	#current_room.get_node("LevelLabel").text = str(current_level)
+	
 	if transition_sprite.is_playing():
 		if can_transition and transition_sprite.frame == 20:
 			can_transition = false
@@ -78,6 +82,7 @@ func _on_zoom_in():
 	playing_forwards = true
 	transition_sprite.visible = true
 	transition_sprite.play("jump")
+	current_level += 1
 
 
 func _on_zoom_out():
@@ -85,6 +90,7 @@ func _on_zoom_out():
 	playing_forwards = false
 	transition_sprite.visible = true
 	transition_sprite.play_backwards("jump")
+	current_level -= 1
 
 
 func _on_next_level(next_scene):
@@ -97,6 +103,8 @@ func _on_next_level(next_scene):
 	
 	current_room = next_scene.instantiate()
 	get_parent().add_child(current_room)
+	
+	#current_room.get_node("LevelLabel").text = str(current_level)
 
 
 func queue_sound(audio_player : AudioStreamPlayer2D, sound : AudioStream):

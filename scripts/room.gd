@@ -100,5 +100,4 @@ func _on_entered():
 
 
 func _on_win():
-	$UI/HUD/WinLabel.visible = true
 	$UI/HUD/NextLevel.visible = true

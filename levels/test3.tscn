@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://colugyup2yp5i"]
+
+[ext_resource type="PackedScene" uid="uid://b2kame6gxgahb" path="res://levels/room_template.tscn" id="1_2qgsv"]
+[ext_resource type="PackedScene" uid="uid://0cw82eo45d0h" path="res://doodads/player.tscn" id="2_vfyo4"]
+[ext_resource type="PackedScene" uid="uid://d2cwwnyxg6iet" path="res://pickups/reflector_pickup.tscn" id="3_uppu1"]
+
+[node name="Room" instance=ExtResource("1_2qgsv")]
+
+[node name="Player" parent="." index="4" instance=ExtResource("2_vfyo4")]
+position = Vector2(571, 489)
+
+[node name="Pickup" parent="." index="5" instance=ExtResource("3_uppu1")]
+position = Vector2(707, 514)

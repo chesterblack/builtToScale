@@ -1,19 +1,19 @@
-@tool
+#@tool
 
 class_name LightEmitter extends Area2D
 
 @export var beam_angle : Vector2 = Vector2(0, 1)
 @export var beam_length : float = 1000.0
 @export var beam_width : float = 2.0
+@export var beam_color : Beam.BeamColor = Beam.BeamColor.GOLD
 
 var beam : Node2D
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	beam = $Beam
+	beam.beam_color = beam_color
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	if "length" in beam:
 		beam.length = beam_length

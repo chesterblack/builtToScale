@@ -1,0 +1,20 @@
+[gd_resource type="ParticleProcessMaterial" format=3 uid="uid://cyoppqwrekwi6"]
+
+[resource]
+particle_flag_disable_z = true
+emission_shape = 5
+emission_point_count = 2
+direction = Vector3(0, 1, 0)
+spread = 0.0
+initial_velocity_max = 587.79
+angular_velocity_max = 241.83
+gravity = Vector3(0, 98, 0)
+scale_min = 2.0
+scale_max = 4.0
+color = Color(0.94902, 0.847059, 0.654902, 1)
+turbulence_enabled = true
+turbulence_noise_strength = 10.78
+turbulence_noise_scale = 2.628
+turbulence_influence_min = 0.063
+turbulence_influence_max = 0.063
+collision_mode = 2
