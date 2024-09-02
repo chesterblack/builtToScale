@@ -34,6 +34,7 @@ func _ready():
 	raycast = $RayCast2D
 	line = $Line2D
 	particle_emitter = $ParticleEmitter
+	particle_emitter.process_material = particle_emitter.process_material.duplicate()
 	particle_material = particle_emitter.process_material
 	
 	# TODO: Do some kind of particle scaling dependant on beam width here
