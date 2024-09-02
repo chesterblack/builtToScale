@@ -1,7 +1,25 @@
 [gd_scene load_steps=3 format=3 uid="uid://chubj3d0reyhd"]
 
 [ext_resource type="Script" path="res://scripts/beam.gd" id="1_fa58b"]
-[ext_resource type="Material" uid="uid://cyoppqwrekwi6" path="res://emitter_particles.tres" id="2_1mjwe"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vrn13"]
+particle_flag_disable_z = true
+emission_shape = 5
+emission_point_count = 2
+direction = Vector3(0, 1, 0)
+spread = 0.0
+initial_velocity_max = 587.79
+angular_velocity_max = 241.83
+gravity = Vector3(0, 98, 0)
+scale_min = 2.0
+scale_max = 4.0
+color = Color(0.545098, 0.921569, 0.313726, 1)
+turbulence_enabled = true
+turbulence_noise_strength = 10.78
+turbulence_noise_scale = 2.628
+turbulence_influence_min = 0.063
+turbulence_influence_max = 0.063
+collision_mode = 2
 
 [node name="Beam" type="Node2D"]
 script = ExtResource("1_fa58b")
@@ -19,5 +37,5 @@ collide_with_areas = true
 
 [node name="ParticleEmitter" type="GPUParticles2D" parent="."]
 amount = 40
-process_material = ExtResource("2_1mjwe")
+process_material = SubResource("ParticleProcessMaterial_vrn13")
 lifetime = 10.0

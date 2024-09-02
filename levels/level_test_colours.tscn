@@ -1,0 +1,80 @@
+[gd_scene load_steps=7 format=3 uid="uid://b713qcrkvm1b1"]
+
+[ext_resource type="PackedScene" uid="uid://b2kame6gxgahb" path="res://levels/room_template.tscn" id="1_0tk4g"]
+[ext_resource type="PackedScene" uid="uid://gdr2x71khouk" path="res://levels/test2.tscn" id="2_lnv4v"]
+[ext_resource type="PackedScene" uid="uid://colugyup2yp5i" path="res://levels/test3.tscn" id="3_35fqd"]
+[ext_resource type="PackedScene" uid="uid://0cw82eo45d0h" path="res://doodads/player.tscn" id="4_syd0v"]
+[ext_resource type="PackedScene" uid="uid://lr04wxy274mm" path="res://doodads/light_emitter.tscn" id="5_jaxff"]
+[ext_resource type="PackedScene" uid="uid://bycibs1p4l3al" path="res://doodads/goal_crystal.tscn" id="6_u0nwt"]
+
+[node name="Room" instance=ExtResource("1_0tk4g")]
+
+[node name="Room" parent="." index="0" instance=ExtResource("2_lnv4v")]
+visible = false
+
+[node name="Room" parent="Room" index="5" instance=ExtResource("3_35fqd")]
+visible = false
+
+[node name="Player" parent="." index="5" instance=ExtResource("4_syd0v")]
+position = Vector2(691, 504)
+
+[node name="Emitters" type="Node2D" parent="." index="7"]
+
+[node name="WhiteEmitter" parent="Emitters" index="0" instance=ExtResource("5_jaxff")]
+position = Vector2(348, 180)
+
+[node name="GoldEmitter" parent="Emitters" index="1" instance=ExtResource("5_jaxff")]
+position = Vector2(548, 180)
+beam_color = 1
+
+[node name="BlueEmitter" parent="Emitters" index="2" instance=ExtResource("5_jaxff")]
+position = Vector2(448, 180)
+beam_color = 2
+
+[node name="PinkEmitter" parent="Emitters" index="3" instance=ExtResource("5_jaxff")]
+position = Vector2(648, 180)
+beam_color = 3
+
+[node name="GreenEmitter" parent="Emitters" index="4" instance=ExtResource("5_jaxff")]
+position = Vector2(748, 180)
+beam_color = 4
+
+[node name="Node2D" type="Node2D" parent="." index="8"]
+
+[node name="WhiteActive" parent="Node2D" index="0" instance=ExtResource("6_u0nwt")]
+position = Vector2(348, 320)
+
+[node name="WhiteNull" parent="Node2D" index="1" instance=ExtResource("6_u0nwt")]
+position = Vector2(372, 348)
+
+[node name="GoldActive" parent="Node2D" index="2" instance=ExtResource("6_u0nwt")]
+position = Vector2(548, 320)
+color = 1
+
+[node name="GoldNull" parent="Node2D" index="3" instance=ExtResource("6_u0nwt")]
+position = Vector2(572, 348)
+color = 1
+
+[node name="BlueActive" parent="Node2D" index="4" instance=ExtResource("6_u0nwt")]
+position = Vector2(448, 320)
+color = 2
+
+[node name="BlueNull" parent="Node2D" index="5" instance=ExtResource("6_u0nwt")]
+position = Vector2(472, 348)
+color = 2
+
+[node name="PinkActive" parent="Node2D" index="6" instance=ExtResource("6_u0nwt")]
+position = Vector2(648, 320)
+color = 3
+
+[node name="PinkNull" parent="Node2D" index="7" instance=ExtResource("6_u0nwt")]
+position = Vector2(672, 348)
+color = 3
+
+[node name="GreenActive" parent="Node2D" index="8" instance=ExtResource("6_u0nwt")]
+position = Vector2(748, 320)
+color = 4
+
+[node name="GreenNull" parent="Node2D" index="9" instance=ExtResource("6_u0nwt")]
+position = Vector2(772, 348)
+color = 4

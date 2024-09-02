@@ -1,18 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://lr04wxy274mm"]
+[gd_scene load_steps=6 format=3 uid="uid://lr04wxy274mm"]
 
-[ext_resource type="Texture2D" uid="uid://dmg4dnwvw52dy" path="res://sprites/crystal.png" id="1_ndrh6"]
 [ext_resource type="Script" path="res://scripts/light_emitter.gd" id="1_y5iuc"]
+[ext_resource type="Texture2D" uid="uid://cqx4xcmykbo82" path="res://sprites/emitter.png" id="2_yf8ap"]
 [ext_resource type="PackedScene" uid="uid://chubj3d0reyhd" path="res://misc_scenes/beam.tscn" id="3_3hpdt"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_v3l4h"]
-atlas = ExtResource("1_ndrh6")
-region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_i1325"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_v3l4h")
+"texture": ExtResource("2_yf8ap")
 }],
 "loop": true,
 "name": &"default",

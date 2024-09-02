@@ -1,0 +1,23 @@
+[gd_resource type="SpriteFrames" load_steps=3 format=3 uid="uid://cksoca4ciowsg"]
+
+[ext_resource type="Texture2D" uid="uid://yt3xrk63r5n3" path="res://sprites/null_white_crystal.png" id="1_ellsu"]
+[ext_resource type="Texture2D" uid="uid://dim3l2hi58cro" path="res://sprites/active_white_crystal.png" id="2_dt33s"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_ellsu")
+}],
+"loop": true,
+"name": &"dim",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_dt33s")
+}],
+"loop": true,
+"name": &"lit",
+"speed": 5.0
+}]

@@ -1,0 +1,23 @@
+[gd_resource type="SpriteFrames" load_steps=3 format=3 uid="uid://cabbq5twls0v2"]
+
+[ext_resource type="Texture2D" uid="uid://bme53ij2bree5" path="res://sprites/null_green_crystal.png" id="1_qirko"]
+[ext_resource type="Texture2D" uid="uid://bb8p1btokddpx" path="res://sprites/active_green_crystal.png" id="2_sdu0y"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_qirko")
+}],
+"loop": true,
+"name": &"dim",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_sdu0y")
+}],
+"loop": true,
+"name": &"lit",
+"speed": 5.0
+}]

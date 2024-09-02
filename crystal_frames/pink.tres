@@ -1,0 +1,23 @@
+[gd_resource type="SpriteFrames" load_steps=3 format=3 uid="uid://cxkquhwijpgce"]
+
+[ext_resource type="Texture2D" uid="uid://bvrww677ywne3" path="res://sprites/null_pink_crystal.png" id="1_psare"]
+[ext_resource type="Texture2D" uid="uid://b537ghxu57qg0" path="res://sprites/active_pink_crystal.png" id="2_scqpe"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_psare")
+}],
+"loop": true,
+"name": &"dim",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_scqpe")
+}],
+"loop": true,
+"name": &"lit",
+"speed": 5.0
+}]

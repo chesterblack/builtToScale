@@ -1,8 +1,10 @@
+@tool
+
 class_name Goal extends Area2D
 
 signal in_light
 
-@export var color : Beam.BeamColor = Beam.BeamColor.GOLD
+@export var color : Beam.BeamColor = Beam.BeamColor.WHITE
 
 var sprite : AnimatedSprite2D
 var is_lit : bool = false
@@ -22,6 +24,18 @@ func _ready():
 
 
 func _process(_delta):
+	match color:
+		Beam.BeamColor.WHITE:
+			sprite.sprite_frames = load("res://crystal_frames/white.tres")
+		Beam.BeamColor.GOLD:
+			sprite.sprite_frames = load("res://crystal_frames/gold.tres")
+		Beam.BeamColor.BLUE:
+			sprite.sprite_frames = load("res://crystal_frames/blue.tres")
+		Beam.BeamColor.PINK:
+			sprite.sprite_frames = load("res://crystal_frames/pink.tres")
+		Beam.BeamColor.GREEN:
+			sprite.sprite_frames = load("res://crystal_frames/green.tres")
+	
 	is_lit = false
 	if is_instance_valid(beam):
 		if beam.collider == self and beam.beam_color == color:

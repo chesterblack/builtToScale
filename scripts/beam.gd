@@ -1,22 +1,22 @@
-#@tool
+@tool
 
 class_name Beam extends Node2D
 
-enum BeamColor { WHITE, GOLD, CYAN, PINK, GREEN }
+enum BeamColor { WHITE, GOLD, BLUE, PINK, GREEN }
 
 const BEAM_COLORS = [
 	Color("#ffffff"),
 	Color("#e9b042"),
-	Color("#6aebe4"),
+	Color("#3d89b3"),
 	Color("#f0657a"),
 	Color("#8beb50")
 ]
 
 @export var ignored_colliders : Array
 @export var length : float = 1000.0
-@export var beam_color : BeamColor = BeamColor.GOLD
+@export var beam_color : BeamColor = BeamColor.WHITE
 
-var color : Color = BEAM_COLORS[BeamColor.GOLD]
+var color : Color = BEAM_COLORS[BeamColor.WHITE]
 var raycast : RayCast2D
 var line : Line2D
 var is_reflected : bool = false

@@ -1,0 +1,23 @@
+[gd_resource type="SpriteFrames" load_steps=3 format=3 uid="uid://dv4skwglvxhjd"]
+
+[ext_resource type="Texture2D" uid="uid://caswbo2ykv4dj" path="res://sprites/null_cyan_crystal.png" id="1_u1hwn"]
+[ext_resource type="Texture2D" uid="uid://cq2bv6r6yx28a" path="res://sprites/active_cyan_crystal.png" id="2_jgpqn"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_u1hwn")
+}],
+"loop": true,
+"name": &"dim",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_jgpqn")
+}],
+"loop": true,
+"name": &"lit",
+"speed": 5.0
+}]

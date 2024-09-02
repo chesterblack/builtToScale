@@ -63,7 +63,7 @@ func _on_can_zoom_in():
 	
 	child_room.visible = true
 	root.add_child(child_room)
-	Global.force_sound(child_room.audio_player, load("res://sounds/zoomin1.wav"))		
+	Global.force_sound(child_room.audio_player, load("res://sounds/zoomin1.wav"))
 	root.remove_child(self)
 	
 	child_room.entered.emit()
@@ -74,7 +74,7 @@ func _on_can_zoom_out():
 	
 	parent_room.visible = true
 	root.add_child(parent_room)
-	Global.force_sound(parent_room.audio_player, load("res://sounds/zoomout1.wav"))	
+	Global.force_sound(parent_room.audio_player, load("res://sounds/zoomout1.wav"))
 	root.remove_child(self)
 
 	parent_room.entered.emit()
