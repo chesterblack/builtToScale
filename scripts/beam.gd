@@ -20,7 +20,9 @@ var color : Color = BEAM_COLORS[BeamColor.WHITE]
 var raycast : RayCast2D
 var line : Line2D
 var is_reflected : bool = false
+var is_refracting : bool = false
 var reflected_beam : Node2D
+var refracted_beams : Array = []
 var collider : Node2D
 var width : float = 2.0
 var particle_emitter : GPUParticles2D
@@ -46,6 +48,7 @@ func _ready():
 
 
 func _process(_delta):
+
 	color = BEAM_COLORS[beam_color]
 	line.default_color = color
 	particle_material.color = color
@@ -99,6 +102,11 @@ func _physics_process(_delta):
 			create_reflection()
 		else:
 			is_reflected = false
+		
+		if collider not in ignored_colliders and collider is Prism and beam_color == BeamColor.WHITE:
+			create_refraction(collider)
+		else:
+			is_refracting = false
 		  
 		if collider is Goal:
 			collider.in_light.emit(self)
@@ -115,6 +123,11 @@ func _physics_process(_delta):
 	if !is_reflected and reflected_beam:
 		reflected_beam.queue_free()
 		reflected_beam = null
+	
+	if !is_refracting and !refracted_beams.is_empty():
+		for beam in refracted_beams:
+			beam.queue_free()
+		refracted_beams = []
 
 
 func create_subroom_beam():
@@ -127,8 +140,6 @@ func create_subroom_beam():
 	var percentage = (collision_left / player_width) * 100
 	var room_width = get_viewport().size.x
 	var light_x = (percentage * room_width) / 100
-	
-	var child_beam = Beam.new()
 	
 	Global.current_room.child_room.outside_light_location = Vector2(light_x, -50.0)
 	Global.current_room.child_room.outside_light_angle = raycast.target_position
@@ -155,3 +166,36 @@ func create_reflection():
 func reflect_beam(collision_point, reflection):
 	global_position = collision_point
 	raycast.target_position = reflection
+
+
+func create_refraction(prism : Prism):
+	is_refracting = true
+	var collision_point = raycast.get_collision_point()
+	var collision_normal = raycast.get_collision_normal().normalized()
+	
+	var reflection_target = raycast.target_position.bounce(collision_normal).normalized() * length
+	var reflection_angle = collision_normal.angle_to(reflection_target)
+	
+	var refraction_origin = collision_point
+	
+	var min_beam = -collision_normal
+	var max_beam = min_beam.rotated(-reflection_angle)
+	var step = (max_beam - min_beam) / (prism.color_splits.size() - 1)
+	var angle = min_beam
+	
+	for i in prism.color_splits.size():
+		var split_color = prism.color_splits[i]
+		var refracted_beam
+		if refracted_beams.size() <= i:
+			refracted_beam = load("res://misc_scenes/beam.tscn").instantiate()
+			refracted_beams.append(refracted_beam)
+		else:
+			refracted_beam = refracted_beams[i]
+		refracted_beam.ignored_colliders = []
+		refracted_beam.ignored_colliders.append(collider)
+		refracted_beam.width = width
+		refracted_beam.beam_color = split_color
+		add_child(refracted_beam)
+		
+		refracted_beam.reflect_beam(refraction_origin, angle)
+		angle += step

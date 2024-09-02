@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cwafnydqtxins"]
+[gd_scene load_steps=12 format=3 uid="uid://cwafnydqtxins"]
 
 [ext_resource type="Script" path="res://scripts/room.gd" id="1_41lri"]
 [ext_resource type="Texture2D" uid="uid://bwopth0mc3a2j" path="res://sprites/backdrop.png" id="2_y083r"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://0cw82eo45d0h" path="res://doodads/player.tscn" id="5_810xh"]
 [ext_resource type="PackedScene" uid="uid://d2cwwnyxg6iet" path="res://pickups/reflector_pickup.tscn" id="6_erxsw"]
 [ext_resource type="PackedScene" uid="uid://clbyeswunoy0" path="res://misc_scenes/ui.tscn" id="7_jgnej"]
+[ext_resource type="PackedScene" uid="uid://bb5nvfk8yper0" path="res://pickups/prism_pickup.tscn" id="9_gwnga"]
 
 [sub_resource type="AudioStream" id="AudioStream_og0t5"]
 
@@ -78,3 +79,6 @@ R to lock rotation"
 
 [node name="LightEmitter" parent="." instance=ExtResource("4_wkpdv")]
 position = Vector2(577, 68)
+
+[node name="Pickup" parent="." instance=ExtResource("9_gwnga")]
+position = Vector2(230, 497)

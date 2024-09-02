@@ -107,13 +107,13 @@ func _on_next_level(next_scene):
 	#current_room.get_node("LevelLabel").text = str(current_level)
 
 
-func queue_sound(audio_player : AudioStreamPlayer2D, sound : AudioStream):
-	if !audio_player.is_playing():
-		audio_player.stream = sound
-		audio_player.play()
+func queue_sound(player : AudioStreamPlayer2D, sound : AudioStream):
+	if !player.is_playing():
+		player.stream = sound
+		player.play()
 
 
-func force_sound(audio_player : AudioStreamPlayer2D, sound : AudioStream):
-	audio_player.stop()
-	audio_player.stream = sound
-	audio_player.play()
+func force_sound(player : AudioStreamPlayer2D, sound : AudioStream):
+	player.stop()
+	player.stream = sound
+	player.play()

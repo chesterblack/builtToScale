@@ -42,7 +42,7 @@ func _ready():
 	Global.win.connect(_on_win)
 
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("zoom_in") and child_room:
 		zoom_in()
 	
