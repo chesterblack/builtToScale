@@ -1,13 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://cwafnydqtxins"]
+[gd_scene load_steps=11 format=3 uid="uid://cwafnydqtxins"]
 
 [ext_resource type="Script" path="res://scripts/room.gd" id="1_41lri"]
+[ext_resource type="PackedScene" uid="uid://gdr2x71khouk" path="res://levels/test2.tscn" id="2_jtp4e"]
 [ext_resource type="Texture2D" uid="uid://bwopth0mc3a2j" path="res://sprites/backdrop.png" id="2_y083r"]
 [ext_resource type="PackedScene" uid="uid://s37mbluyidon" path="res://misc_scenes/default_tilemap.tscn" id="2_ybnju"]
 [ext_resource type="PackedScene" uid="uid://lr04wxy274mm" path="res://doodads/light_emitter.tscn" id="4_wkpdv"]
 [ext_resource type="PackedScene" uid="uid://0cw82eo45d0h" path="res://doodads/player.tscn" id="5_810xh"]
-[ext_resource type="PackedScene" uid="uid://d2cwwnyxg6iet" path="res://pickups/reflector_pickup.tscn" id="6_erxsw"]
 [ext_resource type="PackedScene" uid="uid://clbyeswunoy0" path="res://misc_scenes/ui.tscn" id="7_jgnej"]
-[ext_resource type="PackedScene" uid="uid://bb5nvfk8yper0" path="res://pickups/lens_pickup.tscn" id="9_gwnga"]
 [ext_resource type="PackedScene" uid="uid://b1goohwxramqq" path="res://doodads/lens.tscn" id="10_24c3j"]
 
 [sub_resource type="AudioStream" id="AudioStream_og0t5"]
@@ -28,6 +27,9 @@ corner_radius_bottom_left = 10
 script = ExtResource("1_41lri")
 next_level = "res://levels/level_2.tscn"
 
+[node name="Room" parent="." instance=ExtResource("2_jtp4e")]
+visible = false
+
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_right = 1152.0
 offset_bottom = 648.0
@@ -38,9 +40,6 @@ layer_0/tile_data = PackedInt32Array(0, 65536, 1, 65536, 196608, 0, 131072, 1310
 
 [node name="Player" parent="." instance=ExtResource("5_810xh")]
 position = Vector2(133, 488)
-
-[node name="ReflectorPickup2" parent="." instance=ExtResource("6_erxsw")]
-position = Vector2(189, 500)
 
 [node name="UI" parent="." instance=ExtResource("7_jgnej")]
 
@@ -76,17 +75,6 @@ R to lock rotation"
 [node name="LightEmitter" parent="." instance=ExtResource("4_wkpdv")]
 position = Vector2(577, 68)
 
-[node name="LightEmitter2" parent="." instance=ExtResource("4_wkpdv")]
-position = Vector2(61, 462)
-beam_angle = Vector2(1, 0)
-
-[node name="Pickup" parent="." instance=ExtResource("9_gwnga")]
-position = Vector2(230, 497)
-
 [node name="Lens" parent="." instance=ExtResource("10_24c3j")]
-position = Vector2(500, 429)
-rotation = -0.521758
-
-[node name="Lens2" parent="." instance=ExtResource("10_24c3j")]
-position = Vector2(286, 462)
-color_preset = 1
+position = Vector2(577, 331)
+rotation = 1.5708

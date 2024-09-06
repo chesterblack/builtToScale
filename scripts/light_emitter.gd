@@ -18,6 +18,6 @@ func _process(_delta):
 	if "length" in beam:
 		beam.length = beam_length
 	if "raycast" in beam:
-		beam.raycast.target_position = beam_angle
+		beam.ray_target = beam_angle
 	if "width" in beam:
 		beam.width = beam_width

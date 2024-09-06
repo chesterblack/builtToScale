@@ -11,7 +11,7 @@ var audio_player : AudioStreamPlayer2D
 var track_playing : int
 
 var current_level : int = 1
-var current_room : Room
+var current_room : Room = null
 var goals : Array[Goal] = []
 var transition_sprite : AnimatedSprite2D
 var playing_forwards : bool

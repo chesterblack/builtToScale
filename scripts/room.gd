@@ -18,10 +18,7 @@ var parent_room : Room
 var child_room : Room
 var goals : Array[Goal] = []
 
-var outside_light : Area2D
-var outside_light_location : Vector2 = Vector2.ZERO
-var outside_light_angle : Vector2 = Vector2.ZERO
-var outside_light_width : float
+var outside_light : Beam
 
 
 func _ready():
@@ -84,19 +81,11 @@ func _on_entered():
 	Global.current_room = self
 	
 	if outside_light:
-		outside_light.queue_free()
-		outside_light = null
-	
-	if outside_light_location != Vector2.ZERO:
-		var light_emitter = load("res://doodads/light_emitter.tscn").instantiate()
-		outside_light = light_emitter
-		outside_light.beam_angle = outside_light_angle
-		outside_light.position = outside_light_location
-		outside_light.beam_width = outside_light_width
-		add_child(light_emitter)
-	elif outside_light:
-		outside_light.queue_free()
-		outside_light = null
+		print("outside light: ", outside_light)
+		if !has_node("OutsideBeam"):
+			add_child(outside_light)
+	elif has_node("OutsideBeam"):
+		get_node("OutsideBeam").queue_free()
 
 
 func _on_win():
