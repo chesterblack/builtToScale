@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bjwac01ti4nh0"]
+
+[ext_resource type="Script" path="res://scripts/lens.gd" id="1_n1fg0"]
+[ext_resource type="Texture2D" uid="uid://bry76yp30675p" path="res://sprites/blue_lens.png" id="2_7l0gs"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cip38"]
+radius = 4.0
+height = 24.0
+
+[node name="Lens" type="Area2D"]
+collision_layer = 3
+collision_mask = 4
+script = ExtResource("1_n1fg0")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_7l0gs")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_cip38")

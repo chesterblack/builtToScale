@@ -7,9 +7,6 @@
 item = NodePath("Reflector")
 pickup_rotation = 45.0
 
-[node name="CollisionShape2D" parent="." index="2"]
-disabled = true
-
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="3"]
 polygon = PackedVector2Array(-10, -10, -10, 10, 10, 10)
 

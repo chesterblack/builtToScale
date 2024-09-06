@@ -1,9 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://bb5nvfk8yper0"]
-
-[ext_resource type="PackedScene" uid="uid://bd68y1babhirv" path="res://pickups/pickup.tscn" id="1_1c5s5"]
-[ext_resource type="PackedScene" uid="uid://b1goohwxramqq" path="res://doodads/prism.tscn" id="2_h6ejy"]
-
-[node name="Pickup" node_paths=PackedStringArray("item") instance=ExtResource("1_1c5s5")]
-item = NodePath("Prism")
-
-[node name="Prism" parent="." index="4" instance=ExtResource("2_h6ejy")]

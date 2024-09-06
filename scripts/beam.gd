@@ -4,7 +4,7 @@ class_name Beam extends Node2D
 
 enum BeamColor { WHITE, GOLD, BLUE, PINK, GREEN }
 
-const BEAM_COLORS = [
+const BEAM_COLORS : Array[Color] = [
 	Color("#ffffff"),
 	Color("#e9b042"),
 	Color("#3d89b3"),
@@ -23,6 +23,7 @@ var is_reflected : bool = false
 var is_refracting : bool = false
 var reflected_beam : Node2D
 var refracted_beams : Array = []
+var refracting_lens : Lens
 var collider : Node2D
 var width : float = 2.0
 var particle_emitter : GPUParticles2D
@@ -48,7 +49,6 @@ func _ready():
 
 
 func _process(_delta):
-
 	color = BEAM_COLORS[beam_color]
 	line.default_color = color
 	particle_material.color = color
@@ -76,12 +76,6 @@ func _process(_delta):
 	last_line_end = line.points[-1]
 	
 	particle_emitter.position = particle_emitter.position.move_toward(particle_target, _delta * 600)
-	
-	#if particle_target:
-		#particle_emitter.position += position + (line.points[-1] / 100)
-	#else:
-		#particle_emitter.position += position - (line.points[-1] / 100)
-
 
 
 func _physics_process(_delta):
@@ -92,30 +86,34 @@ func _physics_process(_delta):
 	
 	if raycast.is_colliding():
 		collider = raycast.get_collider()
-		#$Label.text = str(collider) + "\n" + str(ignored_colliders)
-		line.add_point(to_local(raycast.get_collision_point()))
 		
-		if collider not in ignored_colliders and collider is Reflector:
-			if !is_reflected:
-				var sound = load("res://sounds/tink.wav")
-				Global.queue_sound(collider.audio_player, sound)
-			create_reflection()
+		if collider not in ignored_colliders:
+			line.add_point(to_local(raycast.get_collision_point()))
+			
+			if collider is Reflector:
+				if !is_reflected:
+					var sound = load("res://sounds/tink.wav")
+					Global.queue_sound(collider.audio_player, sound)
+				create_reflection()
+			else:
+				is_reflected = false
+			
+			if collider is Lens:
+				create_refraction(collider)
+			else:
+				is_refracting = false
+			  
+			if collider is Goal:
+				collider.in_light.emit(self)
+			
+			if collider is Player:
+				if "child_room" in Global.current_room and Global.current_room.child_room is Room:
+					create_subroom_beam()
 		else:
-			is_reflected = false
-		
-		if collider not in ignored_colliders and collider is Prism and beam_color == BeamColor.WHITE:
-			create_refraction(collider)
-		else:
-			is_refracting = false
-		  
-		if collider is Goal:
-			collider.in_light.emit(self)
-		
-		if collider is Player:
-			if "child_room" in Global.current_room and Global.current_room.child_room is Room:
-				create_subroom_beam()
+			line.add_point(raycast.target_position)
 	else:
 		is_reflected = false
+		is_refracting = false
 		line.add_point(raycast.target_position)
 	
 	line.width = width
@@ -125,9 +123,7 @@ func _physics_process(_delta):
 		reflected_beam = null
 	
 	if !is_refracting and !refracted_beams.is_empty():
-		for beam in refracted_beams:
-			beam.queue_free()
-		refracted_beams = []
+		clear_refracting_beams()
 
 
 func create_subroom_beam():
@@ -142,7 +138,7 @@ func create_subroom_beam():
 	var light_x = (percentage * room_width) / 100
 	
 	Global.current_room.child_room.outside_light_location = Vector2(light_x, -50.0)
-	Global.current_room.child_room.outside_light_angle = raycast.target_position
+	Global.current_room.child_room.outside_light_angle = raycast.target_position.normalized()
 	Global.current_room.child_room.outside_light_width = width * 3
 
 
@@ -168,34 +164,63 @@ func reflect_beam(collision_point, reflection):
 	raycast.target_position = reflection
 
 
-func create_refraction(prism : Prism):
+func clear_refracting_beams():
+	for beam in refracted_beams:
+		beam.queue_free()
+	refracted_beams = []
+
+
+func create_refraction(lens : Lens):
+	if is_refracting and refracting_lens != lens:
+		clear_refracting_beams()
+	
 	is_refracting = true
+	refracting_lens = lens
+	
+	var valid_colors = lens.color_splits.filter(func(lens_color):
+		return lens_color == beam_color or lens_color == BeamColor.WHITE or beam_color == BeamColor.WHITE
+	)
+	
 	var collision_point = raycast.get_collision_point()
 	var collision_normal = raycast.get_collision_normal().normalized()
 	
-	var reflection_target = raycast.target_position.bounce(collision_normal).normalized() * length
+	var reflection_target = raycast.target_position.bounce(collision_normal).normalized()
 	var reflection_angle = collision_normal.angle_to(reflection_target)
+
+	var lens_collider_width = 1
+	if lens.collider.shape.has_method('get_radius'):
+		lens_collider_width = lens.collider.shape.get_radius()
+	elif lens.collider.shape.has_method('get_width'):
+		lens_collider_width = lens.collider.shape.get_width()
+	var refraction_origin = collision_point - (collision_normal * lens_collider_width)
 	
-	var refraction_origin = collision_point
+	var refracted_target = -collision_normal
+	var step = Vector2.ZERO
+	if valid_colors.size() > 1:
+		var min_beam = refracted_target.rotated(deg_to_rad(20))
+		var max_beam = refracted_target.rotated(deg_to_rad(-20))
+		step = (max_beam - min_beam) / (lens.color_splits.size() - 1)
+		refracted_target = min_beam
 	
-	var min_beam = -collision_normal
-	var max_beam = min_beam.rotated(-reflection_angle)
-	var step = (max_beam - min_beam) / (prism.color_splits.size() - 1)
-	var angle = min_beam
-	
-	for i in prism.color_splits.size():
-		var split_color = prism.color_splits[i]
+	for i in valid_colors.size():
+		var split_color = valid_colors[i]
 		var refracted_beam
+		var new_beam = false
+		
 		if refracted_beams.size() <= i:
 			refracted_beam = load("res://misc_scenes/beam.tscn").instantiate()
 			refracted_beams.append(refracted_beam)
+			new_beam = true
 		else:
 			refracted_beam = refracted_beams[i]
+		
 		refracted_beam.ignored_colliders = []
-		refracted_beam.ignored_colliders.append(collider)
+		refracted_beam.ignored_colliders.append(lens)
 		refracted_beam.width = width
 		refracted_beam.beam_color = split_color
-		add_child(refracted_beam)
 		
-		refracted_beam.reflect_beam(refraction_origin, angle)
-		angle += step
+		if new_beam:
+			add_child(refracted_beam)
+		
+		refracted_beam.reflect_beam(refraction_origin, refracted_target)
+		refracted_target += step

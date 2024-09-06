@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/beam.gd" id="1_fa58b"]
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_binhw"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fqid1"]
 particle_flag_disable_z = true
 emission_shape = 5
 emission_point_count = 2
@@ -34,12 +34,7 @@ collision_mask = 3
 collide_with_areas = true
 
 [node name="ParticleEmitter" type="GPUParticles2D" parent="."]
-position = Vector2(0, 30)
+position = Vector2(0, 177.478)
 amount = 40
-process_material = SubResource("ParticleProcessMaterial_binhw")
+process_material = SubResource("ParticleProcessMaterial_fqid1")
 lifetime = 10.0
-
-[node name="Label" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
-text = "[]"

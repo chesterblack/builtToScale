@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://lcejk3j1onok"
-path="res://.godot/imported/square.png-3f8c6615d8061237b70830027fd403c3.ctex"
+uid="uid://ddvxh7ynorwbe"
+path="res://.godot/imported/white_lens.png-613f588ff731c8db742be2811a5e5c2a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/square.png"
-dest_files=["res://.godot/imported/square.png-3f8c6615d8061237b70830027fd403c3.ctex"]
+source_file="res://sprites/white_lens.png"
+dest_files=["res://.godot/imported/white_lens.png-613f588ff731c8db742be2811a5e5c2a.ctex"]
 
 [params]
 

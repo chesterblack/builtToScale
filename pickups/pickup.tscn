@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bd68y1babhirv"]
+[gd_scene load_steps=6 format=3 uid="uid://bd68y1babhirv"]
 
 [ext_resource type="Script" path="res://scripts/pickup.gd" id="1_8nmoa"]
 
@@ -29,9 +29,6 @@ turbulence_initial_displacement_max = 36.5
 [sub_resource type="CircleShape2D" id="CircleShape2D_e5ep7"]
 radius = 19.2354
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_dbsh4"]
-size = Vector2(19.799, 19.799)
-
 [node name="Pickup" type="RigidBody2D"]
 max_contacts_reported = 4
 contact_monitor = true
@@ -48,9 +45,5 @@ collision_layer = 8
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupRadius"]
 shape = SubResource("CircleShape2D_e5ep7")
 debug_color = Color(0.588235, 0.545098, 0.219608, 0.419608)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-rotation = 1.5708
-shape = SubResource("RectangleShape2D_dbsh4")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
