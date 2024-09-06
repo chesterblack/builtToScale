@@ -24,3 +24,5 @@ layer_0/tile_data = PackedInt32Array(0, 196608, 0, 65536, 131072, 1, 131072, 131
 [node name="LevelLabel" type="Label" parent="."]
 offset_right = 40.0
 offset_bottom = 23.0
+
+[node name="OutsideLights" type="Node2D" parent="."]

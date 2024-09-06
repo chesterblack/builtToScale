@@ -18,7 +18,7 @@ var parent_room : Room
 var child_room : Room
 var goals : Array[Goal] = []
 
-var outside_light : Beam
+var outside_lights : Array[Beam] = []
 
 
 func _ready():
@@ -73,19 +73,33 @@ func _on_can_zoom_out():
 	root.add_child(parent_room)
 	Global.force_sound(parent_room.audio_player, load("res://sounds/zoomout1.wav"))
 	root.remove_child(self)
-
+	
 	parent_room.entered.emit()
 
 
 func _on_entered():
 	Global.current_room = self
 	
-	if outside_light:
-		print("outside light: ", outside_light)
-		if !has_node("OutsideBeam"):
-			add_child(outside_light)
-	elif has_node("OutsideBeam"):
-		get_node("OutsideBeam").queue_free()
+	var outside_lights_container = $OutsideLights
+	
+	for child in outside_lights_container.get_children():
+		if !child in outside_lights:
+			child.queue_free()
+	
+	for i in outside_lights.size():
+		var light = outside_lights[i]
+		if !light.parent_beam.is_hitting_char:
+			light.queue_free()
+			outside_lights.remove_at(i)
+		if !outside_lights_container.has_node(NodePath(light.name)):
+			outside_lights_container.add_child(light)
+	
+	#if outside_light:
+		#print("outside light: ", outside_light)
+		#if !has_node("OutsideBeam"):
+			#add_child(outside_light)
+	#elif has_node("OutsideBeam"):
+		#get_node("OutsideBeam").queue_free()
 
 
 func _on_win():

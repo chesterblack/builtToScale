@@ -30,6 +30,8 @@ next_level = "res://levels/level_2.tscn"
 [node name="Room" parent="." instance=ExtResource("2_jtp4e")]
 visible = false
 
+[node name="OutsideLights" type="Node2D" parent="."]
+
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_right = 1152.0
 offset_bottom = 648.0
@@ -75,6 +77,9 @@ R to lock rotation"
 [node name="LightEmitter" parent="." instance=ExtResource("4_wkpdv")]
 position = Vector2(577, 68)
 
+[node name="LightEmitter2" parent="." instance=ExtResource("4_wkpdv")]
+position = Vector2(547, 71)
+
 [node name="Lens" parent="." instance=ExtResource("10_24c3j")]
-position = Vector2(577, 331)
+position = Vector2(577, 407)
 rotation = 1.5708

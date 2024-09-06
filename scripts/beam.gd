@@ -38,7 +38,8 @@ var refracted_beams : Array = []
 var refracting_lens : Lens
 
 var is_hitting_char : bool = false
-var char_beam : Beam = null
+var child_beam : Beam = null
+var parent_beam : Beam = null
 
 
 func _ready():
@@ -137,10 +138,10 @@ func _physics_process(_delta):
 	if !is_refracting and !refracted_beams.is_empty():
 		clear_refracting_beams()
 	
-	if !is_hitting_char and char_beam and !Engine.is_editor_hint():
-		Global.current_room.child_room.outside_light = null
-		char_beam.queue_free()
-		char_beam = null
+	if !is_hitting_char and child_beam and !Engine.is_editor_hint():
+		Global.current_room.child_room.outside_lights = []
+		child_beam.queue_free()
+		child_beam = null
 
 
 func create_subroom_beam():
@@ -154,15 +155,25 @@ func create_subroom_beam():
 	var room_width = get_viewport().size.x
 	var light_x = (percentage * room_width) / 100
 	
-	if !char_beam:
-		char_beam = load("res://misc_scenes/beam.tscn").instantiate()
+	var outside_lights = Global.current_room.child_room.outside_lights
+	var already_exists = -1
+	for i in outside_lights.size():
+		if outside_lights[i].parent_beam == self:
+			already_exists = i
+	if already_exists > -1:
+		child_beam = outside_lights[already_exists]
+	else:
+		child_beam = load("res://misc_scenes/beam.tscn").instantiate()
 	
-	char_beam.beam_color = beam_color
-	char_beam.global_position = Vector2(light_x, -50.0)
-	char_beam.width = width * 3
-	char_beam.ray_target = raycast.target_position.normalized()
-	char_beam.name = "OutsideBeam"
-	Global.current_room.child_room.outside_light = char_beam
+	child_beam.parent_beam = self
+	child_beam.beam_color = beam_color
+	child_beam.global_position = Vector2(light_x, -50.0)
+	child_beam.width = width * 3
+	child_beam.ray_target = raycast.target_position.normalized()
+	child_beam.name = "OutsideBeam" + str(get_instance_id())
+	
+	if already_exists < 0:
+		outside_lights.append(child_beam)
 
 
 func create_reflection():
@@ -208,7 +219,7 @@ func create_refraction(lens : Lens):
 	var collision_normal = raycast.get_collision_normal().normalized()
 	
 	var reflection_target = raycast.target_position.bounce(collision_normal).normalized()
-	var reflection_angle = collision_normal.angle_to(reflection_target)
+	#var reflection_angle = collision_normal.angle_to(reflection_target)
 
 	var lens_collider_width = 1
 	if lens.collider.shape.has_method('get_radius'):
