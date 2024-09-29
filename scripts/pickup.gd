@@ -15,7 +15,7 @@ func _ready():
 
 func _on_body_entered(body):
 	if body is Player:
-		body.pickup_entered.emit(self)
+		body.pickup_entered.emit(self) # Picking up is handled on the player side
 	else:
 		var audio_player = $AudioStreamPlayer2D
 		var sound = load("res://sounds/footstep_woodblock.wav")

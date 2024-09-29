@@ -22,12 +22,14 @@ var outside_lights : Array[Beam] = []
 
 
 func _ready():
+	# For picking stuff up
 	button_prompt_label.text = ""
 	$UI/HUD/NextLevel.next_level = next_level
 	
 	if get_parent() is Room:
 		parent_room = get_parent()
 	
+	# On load, store all child rooms in a variable and kick them out of the tree
 	for child in get_children():
 		if child is Room:
 			child_room = child
@@ -55,6 +57,8 @@ func zoom_out():
 	Global.zoom_out.emit()
 
 
+# This is where the zooming actually happens, theres some awful coupling with the
+# Globals script and idk where the responsibility lies bewtween the two for switching rooms
 func _on_can_zoom_in():
 	exited.emit()
 	
@@ -77,29 +81,27 @@ func _on_can_zoom_out():
 	parent_room.entered.emit()
 
 
+# This sets the current room and creates any lights from the next level up that have
+# hit the character 
 func _on_entered():
 	Global.current_room = self
 	
 	var outside_lights_container = $OutsideLights
 	
 	for child in outside_lights_container.get_children():
-		if !child in outside_lights:
+		if child not in outside_lights:
 			child.queue_free()
 	
+	# This is kinda fucked at the moment, you're halfway through sorting out beams
+	# coming from directions other than the top of the character
 	for i in outside_lights.size():
 		var light = outside_lights[i]
+		print(light.position)
 		if !light.parent_beam.is_hitting_char:
 			light.queue_free()
 			outside_lights.remove_at(i)
 		if !outside_lights_container.has_node(NodePath(light.name)):
 			outside_lights_container.add_child(light)
-	
-	#if outside_light:
-		#print("outside light: ", outside_light)
-		#if !has_node("OutsideBeam"):
-			#add_child(outside_light)
-	#elif has_node("OutsideBeam"):
-		#get_node("OutsideBeam").queue_free()
 
 
 func _on_win():

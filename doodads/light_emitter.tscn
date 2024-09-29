@@ -28,3 +28,4 @@ sprite_frames = SubResource("SpriteFrames_i1325")
 shape = SubResource("CircleShape2D_rwt15")
 
 [node name="Beam" parent="." instance=ExtResource("3_3hpdt")]
+length = 1000.0

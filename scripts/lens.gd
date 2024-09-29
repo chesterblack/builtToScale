@@ -1,17 +1,7 @@
-class_name Lens extends Area2D
-
-
-@onready var collider : CollisionShape2D = $CollisionShape2D
-@onready var sprite : Sprite2D = $Sprite2D
+class_name Lens extends Prism
 
 @export var color_preset : Beam.BeamColor
 
-var color_splits : Array[Beam.BeamColor] = [
-	Beam.BeamColor.GOLD,
-	Beam.BeamColor.BLUE,
-	Beam.BeamColor.PINK,
-	Beam.BeamColor.GREEN
-]
 
 func _ready():
 	if color_preset:

@@ -7,10 +7,12 @@ class_name LightEmitter extends Area2D
 @export var beam_width : float = 2.0
 @export var beam_color : Beam.BeamColor = Beam.BeamColor.WHITE
 
-var beam : Node2D
+var beam : Beam
 
 func _ready():
-	beam = $Beam
+	beam = $Beam as Beam
+	var sprite = $AnimatedSprite2D as AnimatedSprite2D
+	sprite.rotation = Vector2.DOWN.angle_to(beam_angle)
 
 
 func _process(_delta):

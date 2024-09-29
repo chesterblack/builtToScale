@@ -19,6 +19,7 @@ var rotation_locked : bool = false
 var is_walking : bool = false
 var footstep : bool = false
 var grounded : bool = true
+var orientation : Vector2 = Vector2(1,0)
 
 var held_item : Node2D
 var held_pickup : Pickup
@@ -41,14 +42,16 @@ func _process(_delta):
 		grounded = false
 	
 	if Input.is_action_just_pressed("pickup"):
-		if pickup_in_range:
+		if pickup_in_range: # Set in _on_pickup_entered
 			pick_up_item(pickup_in_range)
 		else:
 			drop_item()
 	
-	if is_walking:
+	if is_walking: # In any direction
 		legs_sprite.play("walk")
 		var footstep_sound
+		
+		# Alternate between the two step sounds
 		if footstep:
 			footstep_sound = load("res://sounds/footstep_shaker.wav")
 		else:
@@ -65,6 +68,7 @@ func _process(_delta):
 func _physics_process(delta):
 	movement_control(delta)
 	
+	# Stops the item from following the mouse
 	if Input.is_action_just_pressed("lock_rotation") and can_move:
 		rotation_locked = !rotation_locked
 	
@@ -163,15 +167,20 @@ func movement_control(delta):
 	else:
 		velocity.x = move_toward(velocity.x, 0, move_speed)
 	
+	# orientation is used to determine where beams come from when they hit the character
+	# it doesnt work right now, its what you were working on last
 	if is_on_wall_only():
 		var wall_normal = get_wall_normal()
 		if wall_normal.x > 0:
+			orientation = Vector2(0, 1)
 			$Sprites.rotation_degrees = 90
 		else:
+			orientation = Vector2(0, -1)
 			$Sprites.rotation_degrees = -90
 	else:
+		orientation = Vector2(1,0)
 		$Sprites.rotation_degrees = 0
-		
+	
 	if is_on_wall():
 		var vertical_direction = Input.get_axis("move_up", "move_down")
 		if vertical_direction:

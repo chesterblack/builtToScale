@@ -15,15 +15,15 @@ func _ready():
 	sprite = $AnimatedSprite2D
 	in_light.connect(_on_in_light)
 	
+	# Keep recursively going up the level chain until you hit the highest ancestor
 	var current_room = Global.current_room
 	if current_room:
 		while current_room.parent_room is Room:
 			current_room = current_room.parent_room
 		
+		# And stick this into that levels goals
 		Global.goals.append(self)
-
-
-func _process(_delta):
+	
 	match color:
 		Beam.BeamColor.WHITE:
 			sprite.sprite_frames = load("res://crystal_frames/white.tres")
@@ -35,11 +35,12 @@ func _process(_delta):
 			sprite.sprite_frames = load("res://crystal_frames/pink.tres")
 		Beam.BeamColor.GREEN:
 			sprite.sprite_frames = load("res://crystal_frames/green.tres")
-	
+
+
+func _process(_delta):
 	is_lit = false
-	if is_instance_valid(beam):
-		if beam.collider == self and beam.beam_color == color:
-			is_lit = true
+	if is_instance_valid(beam) and beam.collider == self and beam.beam_color == color:
+		is_lit = true
 	
 	if is_lit:
 		sprite.play("lit")
@@ -48,7 +49,7 @@ func _process(_delta):
 
 
 func _on_in_light(trigger):
-	if !is_lit:
+	beam = trigger
+	if !is_lit and beam.collider == self and beam.beam_color == color:
 		var sound = load("res://sounds/lightup.wav")
 		Global.queue_sound($AudioStreamPlayer2D, sound)
-	beam = trigger

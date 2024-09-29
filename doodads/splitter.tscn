@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://chu7d4icpcymc"]
+
+[ext_resource type="PackedScene" uid="uid://lr04wxy274mm" path="res://doodads/light_emitter.tscn" id="1_ih3da"]
+[ext_resource type="PackedScene" uid="uid://b1goohwxramqq" path="res://doodads/lens.tscn" id="2_0keyo"]
+
+[node name="Splitter" type="Node2D"]
+
+[node name="LightEmitter" parent="." instance=ExtResource("1_ih3da")]
+
+[node name="Lens" parent="." instance=ExtResource("2_0keyo")]
+position = Vector2(0, 88)
+rotation = 1.5708
+
+[node name="Lens2" parent="." instance=ExtResource("2_0keyo")]
+position = Vector2(-31, 159)
+rotation = 1.5708
+color_preset = 1
+
+[node name="Lens3" parent="." instance=ExtResource("2_0keyo")]
+position = Vector2(-11, 159)
+rotation = 1.5708
+color_preset = 2
+
+[node name="Lens4" parent="." instance=ExtResource("2_0keyo")]
+position = Vector2(11, 159)
+rotation = 1.5708
+color_preset = 3
+
+[node name="Lens5" parent="." instance=ExtResource("2_0keyo")]
+position = Vector2(31, 159)
+rotation = 1.5708
+color_preset = 4
