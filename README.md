@@ -3,7 +3,7 @@
 
 Bounce light into your terrarium and zoom in to the level inside your character to solve light-based bouncing puzzles.
 
-Our first ever game! Made over the course of a single weekend.
+Our first ever game! Made over the course of a single weekend with Godot.
 
 <hr />
 <img src="https://img.itch.zone/aW1nLzE3NDQ4OTQ3LnBuZw==/original/nUbUhY.png" />
